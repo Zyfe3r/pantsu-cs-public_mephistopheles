@@ -53,10 +53,10 @@ void __stdcall Start( )
 
 
 	/* createinterface the objects we need */
-	Panel				= ( IPanel* )				Tools->GetInterface( "vgui2.dll",			"VGUI_Panel009" );
-	Surface				= ( ISurface* )				Tools->GetInterface( "vguimatsurface.dll",	"VGUI_Surface031" );
-	EngineClient		= ( IVEngineClient* )		Tools->GetInterface( "engine.dll",			"VEngineClient013" );
-	ClientEntityList	= ( IClientEntityList* )	Tools->GetInterface( "client.dll",			"VClientEntityList003" );
+	Panel = ( IPanel* )Tools->GetInterface( "vgui2.dll", "VGUI_Panel009" );
+	Surface	= ( ISurface* )Tools->GetInterface( "vguimatsurface.dll", "VGUI_Surface031" );
+	EngineClient = ( IVEngineClient* )Tools->GetInterface( "engine.dll", "VEngineClient013" );
+	ClientEntityList = ( IClientEntityList* )Tools->GetInterface( "client.dll",	"VClientEntityList003" );
 
 
 	/* init cheat */
