@@ -15,16 +15,16 @@ public:
 
 		CBaseEntity* Local = ( CBaseEntity* )ClientEntityList->GetClientEntity( EngineClient->GetLocalPlayer( ) );
 
+		PlayerInfo_t* Info = new PlayerInfo_t;
+
+		Matrix3x4_t Matrix = EngineClient->GetMatrix( );
+
+		CVector Screen, Head;
+
 		for ( int i = 0; i < 64; ++i )
 		{
 
-			CBaseEntity* Entity = ( CBaseEntity* ) ClientEntityList->GetClientEntity( i );
-
-			PlayerInfo_t* Info = new PlayerInfo_t;
-
-			CVector Screen, Head;
-
-			Matrix3x4_t Matrix = EngineClient->GetMatrix( );
+			CBaseEntity* Entity = ( CBaseEntity* ) ClientEntityList->GetClientEntity( i );		
 
 			if ( !Entity )
 				continue;
@@ -67,6 +67,7 @@ public:
 
 		}
 
+		free( Info );
 
 	}
 
