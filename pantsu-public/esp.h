@@ -67,7 +67,7 @@ public:
 
 		}
 
-		free( Info );
+		delete Info;
 
 	}
 
