@@ -36,7 +36,7 @@ void __stdcall HookedPaintTraverse( int VGUIPanel, bool ForceRepaint, bool Allow
 		if ( EngineClient->IsInGame( ) && EngineClient->IsConnected( ) )
 		{
 
-			Render->DrawF( 10, 10, CColor( 26, 188, 156, 255 ), 5, 0, "[ pantsu-mephistopheles by maddie ]" );
+			Render->DrawF( 10, 10, CColor( 26, 188, 156, 255 ), 5, 0, "[ pantsu-mephistopheles by madddie.co ]" );
 
 			ESP->Think( );
 
