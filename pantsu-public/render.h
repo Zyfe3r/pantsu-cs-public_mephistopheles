@@ -47,4 +47,11 @@ public:
 		Surface->DrawOutlinedRect( X, Y, X + W, Y + H );
 	}
 
+	void DrawInlineRect( int X, int Y, int W, int H, CColor Color )
+	{
+		DrawRect( X, Y, W, H, Color );
+		DrawRect( X + 1, Y + 1, W - 2, H - 2, CColor( 0, 0, 0, 255 ) );
+		DrawRect( X - 1, Y - 1, W + 2, H + 2, CColor( 0, 0, 0, 255 ) );
+	}
+
 }; extern CRender * Render;

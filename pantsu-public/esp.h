@@ -57,7 +57,7 @@ public:
 
 					int Height = Screen.y - Head.y, Width = Height / 2.5;
 
-					Render->DrawRect( Head.x - Width / 2, Head.y, Width, Height, Color );
+					Render->DrawInlineRect( Head.x - Width / 2, Head.y, Width, Height, Color );
 
 				}
 
