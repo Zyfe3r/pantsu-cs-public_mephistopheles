@@ -99,4 +99,4 @@ private:
 	PDWORD*	m_ppdwClassBase;
 	PDWORD	m_pdwNewVMT, m_pdwOldVMT;
 	DWORD	m_dwVMTSize;
-};extern CHook * PanelHook;
+}; extern CHook * PanelHook; extern CHook * CreateMoveHook;

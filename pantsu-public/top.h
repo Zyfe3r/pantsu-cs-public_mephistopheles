@@ -5,6 +5,8 @@
 #include <Windows.h>
 #include <iostream>
 
+#include "usercmd.h"
+
 #pragma endregion
 
 #pragma region protos
@@ -12,6 +14,8 @@
 typedef void*	( *Interface )( char* _Name, int Return );
 
 typedef void( __thiscall *PaintTraverse )( void*, unsigned int, bool, bool );
+
+typedef bool( __thiscall *CreateMove )( void*, float, CUserCmd* );
 
 #pragma endregion
 

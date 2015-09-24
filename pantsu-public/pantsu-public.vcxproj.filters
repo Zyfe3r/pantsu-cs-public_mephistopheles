@@ -66,6 +66,15 @@
     <ClInclude Include="esp.h">
       <Filter>Header Files\cheat</Filter>
     </ClInclude>
+    <ClInclude Include="base-client.h">
+      <Filter>Header Files\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="clientmode.h">
+      <Filter>Header Files\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="usercmd.h">
+      <Filter>Header Files\structs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

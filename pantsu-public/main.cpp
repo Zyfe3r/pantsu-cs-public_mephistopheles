@@ -3,6 +3,9 @@
 /* sdk */
 #include "client-entity-list.h"
 #include "engine-client.h"
+#include "base-client.h"
+#include "clientmode.h"
+#include "usercmd.h"
 #include "panel.h"
 #include "surface.h"
 #include "hook.h"
@@ -10,18 +13,22 @@
 CTools * Tools;
 IPanel * Panel;
 ISurface * Surface;
+IClientMode ** ClientMode;
 IVEngineClient * EngineClient;
+IBaseClientDll * BaseClientDll;
 IClientEntityList * ClientEntityList;
 
 /* cheat */
 #include "esp.h"
 
 CHook * PanelHook;
+CHook * CreateMoveHook;
+
 CESP * ESP;
 CRender * Render;
 
 PaintTraverse _PaintTraverse;
-
+CreateMove _CreateMove;
 
 /* ptrav hook function */
 void __stdcall HookedPaintTraverse( int VGUIPanel, bool ForceRepaint, bool AllowForce )
@@ -45,6 +52,37 @@ void __stdcall HookedPaintTraverse( int VGUIPanel, bool ForceRepaint, bool Allow
 	}
 }
 
+/* cmove hook function */
+bool __stdcall HookedCreateMove( float SampleTime, CUserCmd* UserCmd )
+{
+	if ( !UserCmd->CommandNumber )
+		return true;
+
+
+	/* code goes here */
+	if ( EngineClient->IsInGame( ) && EngineClient->IsConnected( ) )
+	{
+
+		CBaseEntity * Local = ( CBaseEntity* ) ClientEntityList->GetClientEntity( EngineClient->GetLocalPlayer( ) );
+
+		/* example bhop */
+		if ( UserCmd->Buttons & IN_JUMP )
+		{
+			
+			if ( !( Local->GetFlags( ) & FL_ONGROUND ) )
+			{
+
+				UserCmd->Buttons &= ~IN_JUMP;
+
+			}
+
+		}
+
+	}
+
+	return false;
+}
+
 /* main */
 void __stdcall Start( )
 {
@@ -57,16 +95,25 @@ void __stdcall Start( )
 	Surface	= ( ISurface* )Tools->GetInterface( "vguimatsurface.dll", "VGUI_Surface031" );
 	EngineClient = ( IVEngineClient* )Tools->GetInterface( "engine.dll", "VEngineClient013" );
 	ClientEntityList = ( IClientEntityList* )Tools->GetInterface( "client.dll",	"VClientEntityList003" );
+	BaseClientDll = ( IBaseClientDll* ) Tools->GetInterface( "client.dll", "VClient017" );
 
+	/* get g_pClientMode */
+	void** BaseClientDllVMT = *( void*** ) BaseClientDll;
+	ClientMode = *( IClientMode*** ) ( ( DWORD ) BaseClientDllVMT[ 10 ] + 5 );
 
 	/* init cheat */
 	ESP = new CESP;
 
-
-	/* setup hook */
+	/* setup ptrav hook */
 	PanelHook = new CHook( ( DWORD** ) Panel );
 
 	_PaintTraverse = ( PaintTraverse ) PanelHook->dwHookMethod( ( DWORD ) HookedPaintTraverse, 41 );
+
+	/* setup cmove hook */
+	CreateMoveHook = new CHook( *( DWORD*** ) ClientMode );
+
+	_CreateMove = ( CreateMove ) CreateMoveHook->dwHookMethod( ( DWORD ) HookedCreateMove, 24 );
+
 
 	return;
 }
