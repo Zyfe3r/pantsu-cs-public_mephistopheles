@@ -8,12 +8,7 @@ public:
 
 	float x, y, z;
 
-	CVector( )
-	{
-		memset( this, 0, sizeof( CVector ) );
-	}
-
-	CVector( float x, float y, float z )
+	CVector( float x = 0, float y = 0, float z = 0 )
 	{
 		this->x = x;
 		this->y = y;
@@ -24,5 +19,14 @@ public:
 	{
 		return CVector( x + In.x, y + In.y, z + In.z );
 	}
+	
+	CVector operator - ( const CVector& In )
+	{
+		return CVector( x - In.x, y - In.y, z - In.z );
+	}
 
+	void operator -= ( const CVector In )
+	{
+		*this = CVector( x - In.x, y - In.y, z - In.z );
+	}
 };
