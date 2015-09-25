@@ -20,7 +20,7 @@ public:
 		Matrix3x4_t Matrix = EngineClient->GetMatrix( );
 
 		CVector Screen, Head;
-
+		
 		for ( int i = 0; i < 64; ++i )
 		{
 
@@ -51,7 +51,7 @@ public:
 					else
 						Color = CColor( 0, 255, 255, 255 );
 
-					Render->DrawF( Screen.x, Screen.y + 2, Color, 5, 1, "- %s -", Info->Name );
+					Render->DrawF( Screen.x, Screen.y + 2, Color, 5, 1, "- %s -", Info.Name );
 
 					Render->DrawF( Head.x, Head.y - 12, Color, 5, 1, "- %d -", Entity->GetHealth( ) );
 
