@@ -15,12 +15,12 @@ public:
 
 		CBaseEntity* Local = ( CBaseEntity* )ClientEntityList->GetClientEntity( EngineClient->GetLocalPlayer( ) );
 
-		PlayerInfo_t* Info = new PlayerInfo_t;
+		PlayerInfo_t Info;
 
 		Matrix3x4_t Matrix = EngineClient->GetMatrix( );
 
 		CVector Screen, Head;
-
+		
 		for ( int i = 0; i < 64; ++i )
 		{
 
@@ -28,18 +28,18 @@ public:
 
 			if ( !Entity )
 				continue;
-
-			if ( Entity->GetDormant( ) )
+			
+			if ( Entity == Local )
 				continue;
 
-			if ( Entity == Local )
+			if ( Entity->GetDormant( ) )
 				continue;
 
 
 			if ( Entity->GetHealth( ) )
 			{
 			
-				EngineClient->GetPlayerInfo( i, Info );
+				EngineClient->GetPlayerInfo( i, &Info );
 
 				if ( WorldToScreen( Entity->GetOrigin( ), Screen, Matrix ) && WorldToScreen( ( Entity->GetEyePosition( ) + CVector( 0, 0, 8.f ) ), Head, Matrix ) )
 				{
@@ -51,7 +51,7 @@ public:
 					else
 						Color = CColor( 0, 255, 255, 255 );
 
-					Render->DrawF( Screen.x, Screen.y + 2, Color, 5, 1, "- %s -", Info->Name );
+					Render->DrawF( Screen.x, Screen.y + 2, Color, 5, 1, "- %s -", Info.Name );
 
 					Render->DrawF( Head.x, Head.y - 12, Color, 5, 1, "- %d -", Entity->GetHealth( ) );
 
@@ -67,11 +67,9 @@ public:
 
 		}
 
-		delete Info;
-
 	}
 
-	__forceinline bool WorldToScreen( CVector In, CVector& Out, Matrix3x4_t ViewMatrix )
+	__forceinline bool WorldToScreen( CVector In, CVector& Out, Matrix3x4_t ViewMatrix ) // fix; move matrix to this instead of passing? might look nicer.
 	{
 		Out.x = ViewMatrix.Matrix[ 0 ] * In.x + ViewMatrix.Matrix[ 1 ] * In.y + ViewMatrix.Matrix[ 2 ] * In.z + ViewMatrix.Matrix[ 3 ];
 

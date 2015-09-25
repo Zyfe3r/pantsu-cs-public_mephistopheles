@@ -60,25 +60,26 @@ bool __stdcall HookedCreateMove( float SampleTime, CUserCmd* UserCmd )
 
 
 	/* code goes here */
-	if ( EngineClient->IsInGame( ) && EngineClient->IsConnected( ) )
+
+	CBaseEntity * Local = ( CBaseEntity* ) ClientEntityList->GetClientEntity( EngineClient->GetLocalPlayer( ) );
+	if ( !Local )
+		return true;
+
+	/* example bhop */
+	if ( UserCmd->Buttons & IN_JUMP )
 	{
-
-		CBaseEntity * Local = ( CBaseEntity* ) ClientEntityList->GetClientEntity( EngineClient->GetLocalPlayer( ) );
-
-		/* example bhop */
-		if ( UserCmd->Buttons & IN_JUMP )
-		{
 			
-			if ( !( Local->GetFlags( ) & FL_ONGROUND ) )
-			{
+		if ( !( Local->GetFlags( ) & FL_ONGROUND ) )
+		{
 
-				UserCmd->Buttons &= ~IN_JUMP;
-
-			}
+			UserCmd->Buttons &= ~IN_JUMP;
 
 		}
 
 	}
+	
+	// not accurate and does not look legit, todo; save angles
+	cmd->ViewAngles -= Local->GetPunch() * 2;
 
 	return false;
 }

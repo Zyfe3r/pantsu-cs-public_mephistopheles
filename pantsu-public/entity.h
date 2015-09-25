@@ -37,6 +37,11 @@ public:
 	{
 		return *( int* ) ( this + 0x100 );
 	}
+	
+	CVector GetPunch() 
+	{
+		return *( CVector *) ( this + 0x13E0 );
+	}
 
 	CVector GetOrigin( )
 	{
