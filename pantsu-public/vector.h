@@ -25,8 +25,24 @@ public:
 		return CVector( x - In.x, y - In.y, z - In.z );
 	}
 
+	CVector operator * ( const CVector& In )
+	{
+		return CVector( x * In.x, y * In.y, z * In.z );
+	}
+
+	CVector operator / ( const CVector& In )
+	{
+		return CVector( x / In.x, y / In.y, z / In.z );
+	}
+
 	void operator -= ( const CVector In )
 	{
 		*this = CVector( x - In.x, y - In.y, z - In.z );
 	}
+
+	void operator += ( const CVector In )
+	{
+		*this = CVector( x + In.x, y + In.y, z + In.z );
+	}
+
 };

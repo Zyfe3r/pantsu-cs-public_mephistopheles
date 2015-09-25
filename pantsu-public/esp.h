@@ -41,7 +41,7 @@ public:
 			
 				EngineClient->GetPlayerInfo( i, &Info );
 
-				if ( WorldToScreen( Entity->GetOrigin( ), Screen, Matrix ) && WorldToScreen( ( Entity->GetEyePosition( ) + CVector( 0, 0, 8.f ) ), Head, Matrix ) )
+				if ( WorldToScreen( Entity->GetOrigin( ), Screen ) && WorldToScreen( ( Entity->GetEyePosition( ) + CVector( 0, 0, 8.f ) ), Head ) )
 				{
 					CColor Color( 255, 255, 255, 255 );
 
@@ -69,8 +69,10 @@ public:
 
 	}
 
-	__forceinline bool WorldToScreen( CVector In, CVector& Out, Matrix3x4_t ViewMatrix ) // fix; move matrix to this instead of passing? might look nicer.
+	__forceinline bool WorldToScreen( CVector In, CVector& Out ) 
 	{
+		Matrix3x4_t ViewMatrix = EngineClient->GetMatrix( );
+
 		Out.x = ViewMatrix.Matrix[ 0 ] * In.x + ViewMatrix.Matrix[ 1 ] * In.y + ViewMatrix.Matrix[ 2 ] * In.z + ViewMatrix.Matrix[ 3 ];
 
 		Out.y = ViewMatrix.Matrix[ 4 ] * In.x + ViewMatrix.Matrix[ 5 ] * In.y + ViewMatrix.Matrix[ 6 ] * In.z + ViewMatrix.Matrix[ 7 ];

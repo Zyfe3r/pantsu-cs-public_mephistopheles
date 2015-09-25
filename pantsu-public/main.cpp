@@ -35,20 +35,15 @@ void __stdcall HookedPaintTraverse( int VGUIPanel, bool ForceRepaint, bool Allow
 {
 	_PaintTraverse( Panel, VGUIPanel, ForceRepaint, AllowForce );
 
-
 	/* right panel */
 	if ( !strcmp( "FocusOverlayPanel", Panel->GetName( VGUIPanel ) ) )
 	{
-
 		if ( EngineClient->IsInGame( ) && EngineClient->IsConnected( ) )
 		{
-
 			Render->DrawF( 10, 10, CColor( 26, 188, 156, 255 ), 5, 0, "[ pantsu-mephistopheles by madddie.co ]" );
 
 			ESP->Think( );
-
 		}
-
 	}
 }
 
@@ -61,25 +56,25 @@ bool __stdcall HookedCreateMove( float SampleTime, CUserCmd* UserCmd )
 
 	/* code goes here */
 
-	CBaseEntity * Local = ( CBaseEntity* ) ClientEntityList->GetClientEntity( EngineClient->GetLocalPlayer( ) );
-	if ( !Local )
-		return true;
-
-	/* example bhop */
-	if ( UserCmd->Buttons & IN_JUMP )
+	if ( EngineClient->IsInGame( ) && EngineClient->IsConnected( ) )
 	{
-			
-		if ( !( Local->GetFlags( ) & FL_ONGROUND ) )
+		CBaseEntity * Local = ( CBaseEntity* ) ClientEntityList->GetClientEntity( EngineClient->GetLocalPlayer( ) );
+		
+		if ( !Local )
+			return true;
+
+		/* example bhop */
+		if ( UserCmd->Buttons & IN_JUMP )
 		{
-
-			UserCmd->Buttons &= ~IN_JUMP;
-
+			if ( !( Local->GetFlags( ) & FL_ONGROUND ) )
+			{
+				UserCmd->Buttons &= ~IN_JUMP;
+			}
 		}
 
+		// not accurate and does not look legit, todo; save angles
+		UserCmd->ViewAngles -= Local->GetPunch( ) * 2;
 	}
-	
-	// not accurate and does not look legit, todo; save angles
-	cmd->ViewAngles -= Local->GetPunch() * 2;
 
 	return false;
 }
