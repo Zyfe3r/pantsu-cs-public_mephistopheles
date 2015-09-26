@@ -73,7 +73,10 @@ bool __stdcall HookedCreateMove( float SampleTime, CUserCmd* UserCmd )
 		}
 
 		// not accurate and does not look legit, todo; save angles
-		UserCmd->ViewAngles -= Local->GetPunch( ) * 2;
+		// idk why -= operator doesnt work, someone fix plz
+		UserCmd->ViewAngles.x -= Local->GetPunch( ).x * 2.f;
+		UserCmd->ViewAngles.y -= Local->GetPunch( ).y * 2.f;
+
 	}
 
 	return false;
