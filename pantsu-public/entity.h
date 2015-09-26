@@ -40,7 +40,7 @@ public:
 	
 	CVector GetPunch() 
 	{
-		return *( CVector *) ( this + 0x13FC );
+		return *( CVector* ) ( this + 0x13FC );
 	}
 
 	CVector GetOrigin( )
